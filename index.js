@@ -16,8 +16,9 @@ server.get("/", (req,res) => {
 
 server.get("/api/ipsource/:id", (req, res) => {
     const {id} = req.params;
-    let unit = fakeIPSource.find(record => record.sourceID === id);
-    res.status(200).json(id);
+    const unit = fakeIPSource.find(record => record.sourceID === Number.parseInt(id));
+    
+    res.status(200).json(unit);
 })
 
 server.get("/api/ipsource", (req, res) => {
@@ -27,10 +28,25 @@ server.get("/api/ipsource", (req, res) => {
 server.post("/api/ipsource", (req, res) => {
     let neoSource = {
          sourcename: req.body.sourcename,
-         sourceID: fakeIPSource.length 
+         sourceID: Date.now()
     }
     fakeIPSource.push(neoSource);
     res.status(201).json(neoSource);
+})
+
+server.put("/api/ipsource/:id", (req, res) => {
+    const {id} = req.params;
+    const changes = req.body;
+    let unit = fakeIPSource.find(record => record.sourceID === Number.parseInt(id));
+    if (unit) {
+        unit = { ...unit,
+            ...changes}
+        const index = fakeIPSource.findIndex(record => record.sourceID === Number.parseInt(id));
+        fakeIPSource[index] = unit;
+        res.status(201).json(unit);
+    } else {
+        res.status(404).json({message: "Requested item does not exist."})
+    }
 })
 
 server.listen(PORT, sayHello);

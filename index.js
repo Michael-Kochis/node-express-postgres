@@ -4,11 +4,27 @@ const server = express();
 server.use(express.json());
 const PORT = 5000;
 
-const fakeIPSource = [];
+const ipsource = require("./models/dbhelpers");
 
 const sayHello = () => {
     console.log(`server is listening on port: ${PORT}`);
 }
+
+server.delete("/api/ipsource/:id", (req, res) => {
+    const { id } = req.params;
+    ipsource.removeIPSource(id)
+        .then((result) => {
+            if (result > 0) {
+                res.status(201).json(result);
+            } else {
+                res.status(404).json({message: "no such record found."});
+            }
+        }).catch(() => {
+            res.status(500).json({
+                message: "Undefined error on server."
+            })
+        })
+})
 
 server.get("/", (req,res) => {
     res.json({message: "Yip, yip, Appa!"});
@@ -16,37 +32,59 @@ server.get("/", (req,res) => {
 
 server.get("/api/ipsource/:id", (req, res) => {
     const {id} = req.params;
-    const unit = fakeIPSource.find(record => record.sourceID === Number.parseInt(id));
-    
-    res.status(200).json(unit);
+    ipsource.findIPSourceByID(id)
+        .then((response) => {
+            if (response) {
+                res.status(201).json(response);
+            } else {
+                res.status(404).json({message: "no such record found"});
+            }
+        }).catch(() => {
+            res.status(500).json({
+                message: "Undefined error on server."
+            })
+        })
 })
 
 server.get("/api/ipsource", (req, res) => {
-    res.status(201).json(fakeIPSource);
+    ipsource.getAllIPSource()
+        .then(data => {
+            res.status(201).json(data);
+        }).catch(() => {
+            res.status(500).json({
+                message: "Undefined error on server."
+            })
+        })
 })
 
 server.post("/api/ipsource", (req, res) => {
-    let neoSource = {
-         sourcename: req.body.sourcename,
-         sourceID: Date.now()
-    }
-    fakeIPSource.push(neoSource);
-    res.status(201).json(neoSource);
+    ipsource.addIPSource(req.body)
+        .then((source) => {
+            res.status(201).json(source);
+        }).catch(() => {
+            res.status(500).json({
+                message: "Undefined error on server."
+            })
+        })
 })
 
 server.put("/api/ipsource/:id", (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const changes = req.body;
-    let unit = fakeIPSource.find(record => record.sourceID === Number.parseInt(id));
-    if (unit) {
-        unit = { ...unit,
-            ...changes}
-        const index = fakeIPSource.findIndex(record => record.sourceID === Number.parseInt(id));
-        fakeIPSource[index] = unit;
-        res.status(201).json(unit);
-    } else {
-        res.status(404).json({message: "Requested item does not exist."})
-    }
+    
+    ipsource.modifyIPSource(id, changes)
+        .then((result) => {
+            if (result) {
+                res.status(201).json(result);
+            } else {
+                res.status(404).json({message: "no such record found"});
+            }
+        }).catch(() => {
+            res.status(500).json({
+                message: "Undefined error on server."
+            })
+        })
+
 })
 
 server.listen(PORT, sayHello);

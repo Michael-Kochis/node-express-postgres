@@ -90,6 +90,7 @@
         "serviceworker",
         "setimmediate",
         "sourcename",
+        "tablename",
         "templatesettings",
         "typedarray",
         "typer"

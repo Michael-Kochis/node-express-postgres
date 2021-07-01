@@ -12,8 +12,9 @@ module.exports = {
 //add
 async function addIPSource(neoSource) {
     neoSource.sourceID = Date.now();
-    const [sourceID] = await db("ipsource").insert(neoSource);
-    return neoSource;
+    // const [sourceID] = await db("ipsource").insert(neoSource);
+    // return neoSource;
+    return await db('ipsource').insert(neoSource, [sourceID, sourcename]);
 }
 
 //delete

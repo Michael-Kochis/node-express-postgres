@@ -39,9 +39,10 @@ router.get("/", (req, res) => {
     ipsource.getAllIPSource()
         .then(data => {
             res.status(201).json(data);
-        }).catch(() => {
+        }).catch((err) => {
             res.status(500).json({
-                message: "Undefined error on server."
+                message: "Undefined error on server.",
+                error: err
             })
         })
 })

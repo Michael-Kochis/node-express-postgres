@@ -35,12 +35,14 @@ async function getAllIPSource() {
 async function findIPSourceByID(key) {
     key = parseInt(key);
     return await db("ipsource")
-        .where({sourceID: key});
+        .where({sourceID: key})
+        .first();
 }
 
 async function findIPSourceByName(key) {
     return await db("ipsource")
-        .where({sourcename: key});
+        .where({sourcename: key})
+        .first();
 }
 
 //update
@@ -50,4 +52,7 @@ async function modifyIPSource(key, changes) {
     return await db("ipsource")
         .where({sourceID: key})
         .update(changes)
+        .then(() => {
+            return findIPSourceByID(key);
+        })
 }

@@ -49,6 +49,7 @@
         "icss",
         "imurmurhash",
         "ipaddr",
+        "ipserver",
         "isarray",
         "isexe",
         "isobject",

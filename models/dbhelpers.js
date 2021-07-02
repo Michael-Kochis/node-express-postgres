@@ -11,10 +11,10 @@ module.exports = {
 
 //add
 async function addIPSource(neoSource) {
-    neoSource.sourceID = Date.now();
+    neoSource.sourceid = Date.now();
     // const [sourceID] = await db("ipsource").insert(neoSource);
     // return neoSource;
-    return await db('ipsource').insert(neoSource, [sourceID, sourcename]);
+    return await db('ipsource').insert(neoSource, ['sourceid', 'sourcename']);
 }
 
 //delete

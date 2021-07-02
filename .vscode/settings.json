@@ -89,6 +89,7 @@
         "selfsigned",
         "serviceworker",
         "setimmediate",
+        "sourceid",
         "sourcename",
         "tablename",
         "templatesettings",

@@ -54,9 +54,10 @@ router.post("/", (req, res) => {
     ipsource.addIPSource(req.body)
         .then((source) => {
             res.status(201).json(source);
-        }).catch(() => {
+        }).catch((err) => {
             res.status(500).json({
-                message: "Undefined error on server."
+                message: "Undefined error on server.",
+                error: err
             })
         })
 })

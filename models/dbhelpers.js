@@ -20,7 +20,7 @@ async function addIPSource(neoSource) {
 //delete
 async function removeIPSource(key) {
     return await db("ipsource")
-        .where({sourceID: key}).first()
+        .where({sourceid: key}).first()
         .del();
 }
 
@@ -33,7 +33,7 @@ async function getAllIPSource() {
 async function findIPSourceByID(key) {
     key = parseInt(key);
     return await db("ipsource")
-        .where({sourceID: key})
+        .where({sourceid: key})
         .first();
 }
 
@@ -48,7 +48,7 @@ async function modifyIPSource(key, changes) {
     key = parseInt(key);
     console.log(changes);
     return await db("ipsource")
-        .where({sourceID: key})
+        .where({sourceid: key})
         .update(changes)
         .then(() => {
             return findIPSourceByID(key);

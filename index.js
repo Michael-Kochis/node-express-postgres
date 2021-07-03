@@ -1,4 +1,5 @@
 require("dotenv").config();
+const pg = require('pg');
 const server = require('./api/ipserver');
 
 if (process.env.DATABASE_URL) {

@@ -1,6 +1,6 @@
 require("dotenv").config();
 const pg = require('pg');
-const server = require('./api/ipserver');
+const server = require('./api/server');
 
 if (process.env.DATABASE_URL) {
     pg.defaults.ssl = {

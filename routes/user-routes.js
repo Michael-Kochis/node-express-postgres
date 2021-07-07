@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    if (!neoUser.username || !neoUser.password) {
+    if (!username || !password) {
         res.status(400).json({ message: "username and password both required" })
     } else {
         users.findUserByUsername(username)

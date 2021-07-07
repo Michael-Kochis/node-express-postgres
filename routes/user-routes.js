@@ -19,7 +19,20 @@ router.post('/login', (req, res) => {
     if (!neoUser.username || !neoUser.password) {
         res.status(400).json({ message: "username and password both required" })
     } else {
+        users.findUserByUsername(username)
+            .then((user) => {
+                if (!user) {
+                    res.status(400).json({ message: "No such username exists." });
+                } else { 
+                    if (bcrypt.compareSync(password, user.password)) {
+                        res.status(200).json({ message: `Welcome, ${user.username}` })
+                    } else {
+                        res.status(500).json({ message: "Username and password do not match." })
+                    }
+                }
+            }).catch((err) => res.status(500).json({ message: "Error during login process" }) )
     }
+
 })
 
 router.post('/register', (req, res) => {

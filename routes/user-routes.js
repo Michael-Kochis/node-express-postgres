@@ -13,6 +13,15 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (!neoUser.username || !neoUser.password) {
+        res.status(400).json({ message: "username and password both required" })
+    } else {
+    }
+})
+
 router.post('/register', (req, res) => {
     const neoUser = req.body;
 
@@ -24,7 +33,7 @@ router.post('/register', (req, res) => {
     } else {
         users.registerUser(neoUser)
             .then((resp) => {
-                res.status(201).json(neoUser);
+                res.status(201).json(resp);
             }).catch((err) => {
                 if (err.errno === 19) {
                     res.status(400).json({ message: "Constraints violated " })

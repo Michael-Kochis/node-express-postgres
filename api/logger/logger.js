@@ -1,4 +1,5 @@
 const db = require('../../data/dbConfig');
+const jwt = require('jsonwebtoken');
 
 function logger(req, res, next) {
     //request method, request url, and a timestamp
@@ -7,13 +8,21 @@ function logger(req, res, next) {
         const url = req.url || "/";
         const time = Date.now();
 
-        let decoded = "none";
+        let decoded = 0;
         if (req) {
-            console.log(req);
-
-            if (req.decoded) {
-            console.log(req.decoded);
-            decoded = req.decoded.username;
+            if (req.headers && req.headers.authorization) {
+                const token = req.headers.authorization;
+                const secret = process.env.TOKEN_SECRET;
+            
+                if (token) {
+                    jwt.verify(token, secret, (err, decoded) => {
+                        if (err) {
+                            res.status(401).json({ message: "auth token corrupted or expired"})
+                        } else {
+                            decoded = decoded.id;
+                        }
+                    })
+                } 
             }
         }
 

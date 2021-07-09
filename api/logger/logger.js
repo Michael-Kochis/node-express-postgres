@@ -8,8 +8,13 @@ function logger(req, res, next) {
         const time = Date.now();
 
         let decoded = "none";
-        if (req && req.decoded) {
+        if (req) {
+            console.log(req);
+
+            if (req.decoded) {
+            console.log(req.decoded);
             decoded = req.decoded.username;
+            }
         }
 
         const neoLogMessage = {

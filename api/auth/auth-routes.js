@@ -49,7 +49,7 @@ router.post('/register', (req, res) => {
                 } else {
                     res.status(500).json({ message: "Unknown server error ",
                     error: err
-                })
+                    })
                 }
             })
     } 

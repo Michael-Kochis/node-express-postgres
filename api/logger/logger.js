@@ -22,9 +22,8 @@ function logger(req, res, next) {
         .then(() => {
             next();
         }).catch(next);
-    } else {
-        next();
-    }
+    } 
+    next();
 }
   
 module.exports = {

@@ -19,7 +19,7 @@ function logger(req, res, next) {
                         if (err) {
                             res.status(401).json({ message: "auth token corrupted or expired"})
                         } else {
-                            decoded = decoded.id;
+                            //decoded = decoded.id;
                             console.log(decoded);
                             console.log(decoded.id);
                         }

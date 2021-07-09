@@ -7,10 +7,9 @@ function logger(req, res, next) {
         const url = req.url || "/";
         const time = Date.now();
 
-        let decoded = 0;
+        let decoded = "none";
         if (req && req.decoded) {
-            console.log("Logger: ", req.decoded);
-            decoded = req.decoded.id;
+            decoded = req.decoded.username;
         }
 
         const neoLogMessage = {

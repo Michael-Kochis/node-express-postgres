@@ -10,7 +10,7 @@ function verifyToken(req, res, next) {
                 res.status(401).json({ message: "auth token corrupted or expired"})
             } else {
                 req.decoded = decoded;
-                console.log("Verify: ", decoded.id);
+                console.log("Verify: ", decoded);
                 next();
             }
         })

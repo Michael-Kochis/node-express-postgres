@@ -14,8 +14,10 @@ function logger(req, res, next) {
                 const token = req.headers.authorization;
                 const secret = process.env.TOKEN_SECRET;
             
+                console.log("Logger: ", token);
                 if (token) {
                     jwt.verify(token, secret, (err, decoded) => {
+                        console.log("Logger decoded: ", decoded);
                         if (err) {
                             res.status(401).json({ message: "auth token corrupted or expired"})
                         } else {

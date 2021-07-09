@@ -9,6 +9,7 @@ function logger(req, res, next) {
 
         let decoded = 0;
         if (req && req.decoded) {
+            console.log("Logger: ", req.decoded);
             decoded = req.decoded.id;
         }
 

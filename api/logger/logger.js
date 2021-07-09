@@ -20,10 +20,18 @@ function logger(req, res, next) {
                             res.status(401).json({ message: "auth token corrupted or expired"})
                         } else {
                             decoded = decoded.id;
+                            console.log(decoded);
+                            console.log(decoded.id);
                         }
                     })
-                } 
+                } else {
+                    console.log("Auth token is invalid");
+                }
+            } else {
+                console.log("No req headers or no auth header.");
             }
+        } else {
+            console.log("No req.");
         }
 
         const neoLogMessage = {

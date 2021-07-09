@@ -8,20 +8,20 @@ function logger(req, res, next) {
         const url = req.url || "/";
         const time = Date.now();
 
-        let decoded = 0;
+        let neoID = 0;
         if (req) {
             if (req.headers && req.headers.authorization) {
                 const token = req.headers.authorization;
                 const secret = process.env.TOKEN_SECRET;
             
-                console.log("Logger: ", token);
                 if (token) {
                     jwt.verify(token, secret, (err, decoded) => {
-                        console.log("Logger decoded: ", decoded);
                         if (err) {
                             res.status(401).json({ message: "auth token corrupted or expired"})
                         } else {
-                            decoded = decoded.id;
+                            console.log("Logger decoded: ", decoded);
+                            neoID = decoded.id;
+                            console.log(neoID);
                         }
                     })
                 } 
@@ -30,7 +30,7 @@ function logger(req, res, next) {
 
         const neoLogMessage = {
             id: Date.now(),
-            who: decoded,
+            who: neoID,
             when: time,
             what: method,
             where: url

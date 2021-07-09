@@ -5,6 +5,7 @@ const users = require("../../models/userHelpers");
 const router = express.Router()
 
 const { generateToken } = require('./auth-token');
+const { verifyToken } = require('./auth-middleware');
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -52,6 +53,10 @@ router.post('/register', (req, res) => {
                 }
             })
     } 
+})
+
+router.post("/testToken", verifyToken, (req, res, next) => {
+    res.status(200).json({ message: "Proper token detected." });
 })
 
 module.exports = router;

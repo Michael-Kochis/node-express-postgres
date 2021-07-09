@@ -19,9 +19,7 @@ function logger(req, res, next) {
                         if (err) {
                             res.status(401).json({ message: "auth token corrupted or expired"})
                         } else {
-                            console.log("Logger decoded: ", decoded);
                             neoID = decoded.id;
-                            console.log(neoID);
                         }
                     })
                 } 

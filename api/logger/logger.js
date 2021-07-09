@@ -20,8 +20,10 @@ function logger(req, res, next) {
         return db('logs')
         .insert(neoLogMessage)
         .then(() => {
-        next();
+            next();
         }).catch(next);
+    } else {
+        next();
     }
 }
   

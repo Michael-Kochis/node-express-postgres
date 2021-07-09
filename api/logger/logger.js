@@ -1,5 +1,6 @@
 const db = require('../../data/dbConfig');
-const jwt = require('jsonwebtoken');
+
+const { getUserID } = require('../auth/auth-middleware')
 
 function logger(req, res, next) {
     //request method, request url, and a timestamp
@@ -8,23 +9,7 @@ function logger(req, res, next) {
         const url = req.url || "/";
         const time = Date.now();
 
-        let neoID = 0;
-        if (req) {
-            if (req.headers && req.headers.authorization) {
-                const token = req.headers.authorization;
-                const secret = process.env.TOKEN_SECRET;
-            
-                if (token) {
-                    jwt.verify(token, secret, (err, decoded) => {
-                        if (err) {
-                            res.status(401).json({ message: "auth token corrupted or expired"})
-                        } else {
-                            neoID = decoded.id;
-                        }
-                    })
-                } 
-            } 
-        }
+        let neoID = getUserID(req, res, next);
 
         const neoLogMessage = {
             id: Date.now(),

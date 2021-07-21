@@ -5,7 +5,7 @@ const generateToken = (user) => {
         id: user.userID,
         username: user.username
     }
-    const secret = process.env.TOKEN_SECRET
+    const secret = process.env.TOKEN_SECRET;
     const options = {
         expiresIn: '1d'
     }

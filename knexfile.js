@@ -1,3 +1,5 @@
+const { DATABASE_URL } = require('./config/secrets')
+
 module.exports = {
     development: {
         client: "sqlite3",
@@ -16,7 +18,7 @@ module.exports = {
     },
     production: {
         client: 'pg',
-        connection: process.env.DATABASE_URL,
+        connection: DATABASE_URL,
         pool: {
             min: 2,
             max: 10
